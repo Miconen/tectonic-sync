@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"log"
 	"strconv"
 	"tectonic-sync/utils"
 
@@ -38,17 +37,17 @@ func UpdateRsns(nc []utils.NameChange, verbose bool) error {
 		}
 
 		if verbose {
-			log.Printf("[%s -> %s](%d)\n", user.OldName, user.NewName, user.PlayerId)
+			fmt.Printf("[%s -> %s](%d)\n", user.OldName, user.NewName, user.PlayerId)
 		}
 
 		// Check the commandTag to determine the success of the update
 		if commandTag.RowsAffected() == 1 {
-			log.Printf("User [%s -> %s](%d) successfully updated\n", user.OldName, user.NewName, user.PlayerId)
+			fmt.Printf("User [%s -> %s](%d) successfully updated\n", user.OldName, user.NewName, user.PlayerId)
 			updated++
 		}
 	}
 
-	log.Printf("Updated %d/%d fetched users.\n", updated, len(nc))
+	fmt.Printf("Updated %d/%d fetched users.\n", updated, len(nc))
 
 	errs = append(errs, results.Close())
 
