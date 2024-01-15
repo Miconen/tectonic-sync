@@ -29,6 +29,11 @@ func main() {
 		os.Exit(1)
 	}
 
+	if os.Getenv("DATABASE_URL") == "" {
+		fmt.Fprintf(os.Stderr, "Error getting environment variable: \"DATABASE_URL\"\n")
+		os.Exit(1)
+	}
+
 	conn, err := database.InitDB()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error initializing database: %v\n", err)
