@@ -12,11 +12,11 @@ import (
 	"github.com/jackc/pgx/v5"
 )
 
-func UpdateRsns(g string, nc []utils.NameChange, verbose bool) error {
+func UpdateRsns(nc []utils.NameChange, verbose bool) error {
 	b := &pgx.Batch{}
 
 	for _, user := range nc {
-		query := psql.Update("rsn").Set("rsn", user.NewName).Where(squirrel.Eq{"guild_id": g, "wom_id": strconv.Itoa(user.PlayerId)})
+		query := psql.Update("rsn").Set("rsn", user.NewName).Where(squirrel.Eq{"wom_id": strconv.Itoa(user.PlayerId)})
 		sql, args, err := query.ToSql()
 		if err != nil {
 			return err

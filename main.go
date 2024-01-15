@@ -12,7 +12,6 @@ import (
 func main() {
 	groupFlag := flag.String("group", "", "group")
 	dbFlag := flag.String("db", "", "db")
-	guildFlag := flag.String("guild", "", "guild")
 	verboseFlag := flag.Bool("verbose", false, "verbose")
 
 	flag.Parse()
@@ -22,15 +21,6 @@ func main() {
 	}
 	if *dbFlag != "" {
 		os.Setenv("DATABASE_URL", *dbFlag)
-	}
-	if *guildFlag != "" {
-		os.Setenv("GUILD_ID", *guildFlag)
-	}
-
-	guild := os.Getenv("GUILD_ID")
-	if guild == "" {
-		fmt.Fprintf(os.Stderr, "Error getting environment variable: \"GUILD_ID\"\n")
-		os.Exit(1)
 	}
 
 	group := os.Getenv("GROUP_ID")
@@ -52,7 +42,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	err = database.UpdateRsns(guild, users, *verboseFlag)
+	err = database.UpdateRsns(users, *verboseFlag)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error updating users: %v\n", err)
 		os.Exit(1)
